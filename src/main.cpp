@@ -30,9 +30,11 @@ enum OutputType {
 
 // Functions declarations
 // -----------------------------------------------------
-bool readInputParams(int, char*, OutputType*, int*);
+bool readInputParams(int, char**, OutputType&, long&);
 void printUsage();
 OutputType stringToOutputType(std::string);
+void readVertices(long&, char**);
+
 //Result findPrimesSequential(int);
 //Result findPrimesParallel(int, int);
 //bool isPrime(int);
@@ -42,51 +44,60 @@ OutputType stringToOutputType(std::string);
 
 // main Function
 // -----------------------------------------------------
-int main(int argc, char *argv[]) {
-    int *numVertices = 0;
-    int *numThreads = 0;
-    OutputType *outputType(nullptr);
-    if (readInputParams(argc, *argv, outputType, numThreads)) {
-        std::cout << "Entrada correta:\numVertices d" << numVertices;
+int main(int argc, char **argv) {
+    long numVertices = 0;
+    long numThreads = 0;
+    OutputType outputType = NONE;
+    if (readInputParams(argc, argv, outputType, numThreads)) {
+
+        std::cin >> numVertices;
+
+        char[numVertices][2] arrayVertices;
+        readVertices(numVertices, arrayVertices);
     }
-    std::cout << "Finalizando:\n";
+    std::cout << "\n\nFinalizando:\n";
     return EXIT_SUCCESS;
 }
 
 // Function implementations
 // -----------------------------------------------------
-bool readInputParams(int argc, char *argv[], OutputType *outputType, int *numThreads) {
-    if (argc != 2) {
+bool readInputParams(int argc, char **argv, OutputType &outputType, long &numThreads) {
+    if (argc != 3) {
         printUsage();
         return false;
     } else {
         std::string input(argv[1]);
-        int numThread = std::atoi(argv[2]);
-        numThreads = &numThread;
+        numThreads = std::atol(argv[2]);
         OutputType outputTypel = stringToOutputType(input);
-        if (outputTypel == NONE) {
+        if (numThreads <= 0 || numThreads > INT_MAX || outputTypel == NONE) {
             printUsage();
             return false;
         }
-        outputType = &outputTypel;
+        outputType = outputTypel;
     }
     return true;
 }
 
 void printUsage() {
     std::cout << "Usage:\n";
-    std::cout << "\t./pp-ep02-012015 [time | area | all] [num_threads]\n";
+    std::cout << "\t./pp-ep02-012015 [output type] [number of threads]\n\n";
+    std::cout << "\toutput type         -- Define the output type [time | area | all]\n";
+    std::cout << "\tnumber of threads   -- Define the number of threads to use in processing  [a valid interger greater than 0 and less or equal than " << INT_MAX << "]\n";
+    std::cout << "Sample:\n";
     std::cout << "\t./pp-ep02-012015 all 4\n";
 }
 
 OutputType stringToOutputType(std::string input) {
-    OutputType outputType = NONE;
     if (input == "time") {
-        outputType = TIME;
+        return TIME;
     } else if (input == "area") {
-        outputType = AREA;
+        return AREA;
     } else if (input == "all") {
-        outputType = ALL;
+        return ALL;
     }
-    return outputType;
+    return NONE;
+}
+
+void readVertices(long &numVertices, char **arrayVertices) {
+
 }
