@@ -53,6 +53,7 @@ int main(int argc, char **argv) {
         std::cin >> numVertices;
 
         char arrayVertices[][2] = { { 0, 0 }, { 0, 8 }, { 8, 8 }, { 8, 0 }, { 0, 0 } };
+
         readVertices(numVertices, arrayVertices);
     }
     std::cout << "\n\nFinalizando:\n";
