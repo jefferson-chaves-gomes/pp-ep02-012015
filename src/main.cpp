@@ -11,6 +11,8 @@
 // Libraries definitions
 // -----------------------------------------------------
 #include <iostream>
+#include <time.h>
+#include <cmath>
 
 // Enums definitions
 // -----------------------------------------------------
@@ -23,17 +25,18 @@ enum OutputType {
 
 // Structs definitions
 // -----------------------------------------------------
-//struct Result {
-//        std::chrono::duration<double> processTime;
-//        std::set<int> lstPrimes;
-//};
+struct Result {
+        std::chrono::duration<double> processTime;
+        double area;
+};
 
 // Functions declarations
 // -----------------------------------------------------
 bool readInputParams(int, char**, OutputType&, long&);
 void printUsage();
 OutputType stringToOutputType(std::string);
-void readVertices(long&, char**);
+void readVertices(long, double[][2]);
+Result shoelaceTheorem(long, double[][2], long);
 
 //Result findPrimesSequential(int);
 //Result findPrimesParallel(int, int);
@@ -49,12 +52,10 @@ int main(int argc, char **argv) {
     long numThreads = 0;
     OutputType outputType = NONE;
     if (readInputParams(argc, argv, outputType, numThreads)) {
-
         std::cin >> numVertices;
-
-        char arrayVertices[][2] = { { 0, 0 }, { 0, 8 }, { 8, 8 }, { 8, 0 }, { 0, 0 } };
-
+        double arrayVertices[numVertices][2];
         readVertices(numVertices, arrayVertices);
+        shoelaceTheorem(numVertices, arrayVertices, numThreads);
     }
     std::cout << "\n\nFinalizando:\n";
     return EXIT_SUCCESS;
@@ -99,6 +100,31 @@ OutputType stringToOutputType(std::string input) {
     return NONE;
 }
 
-void readVertices(long &numVertices, char **arrayVertices) {
+void readVertices(long numVertices, double arrayVertices[][2]) {
+    for (long i = 0; i < numVertices; ++i) {
+        std::cin >> arrayVertices[i][0];
+        std::cin >> arrayVertices[i][1];
+    }
+}
 
+Result shoelaceTheorem(long numVertices, double arrayVertices[][2], long numThreads) {
+    Result result;
+    double sum1 = 0;
+    double sum2 = 0;
+    double x = 0;
+    double y = 0;
+    for (int i = 0; i < numVertices - 1; i++) {
+        x = arrayVertices[i][0];
+        y = arrayVertices[i + 1][1];
+        sum1 += x * y;
+    }
+    sum1 += arrayVertices[4][0] * arrayVertices[1][1];
+    for (int i = 0; i < numVertices - 1; i++) {
+        x = arrayVertices[i + 1][0];
+        y = arrayVertices[i][1];
+        sum2 += x * y;
+    }
+    sum2 += arrayVertices[1][0] * arrayVertices[4][1];
+    std::cout << " area: " << std::abs((sum1 - sum2) / 2.0) << "\n";
+    return result;
 }
