@@ -37,11 +37,11 @@ void printUsage();
 OutputType stringToOutputType(std::string);
 void readVertices(long, double[][2]);
 Result shoelaceTheorem(long, double[][2], long);
+void printResult(OutputType, Result);
 
 //Result findPrimesSequential(int);
 //Result findPrimesParallel(int, int);
 //bool isPrime(int);
-//void printResult(OutputType, Result);
 //void printTimeOutputType(Result);
 //void printListOutputType(Result);
 
@@ -109,8 +109,8 @@ void readVertices(long numVertices, double arrayVertices[][2]) {
 
 Result shoelaceTheorem(long numVertices, double arrayVertices[][2], long numThreads) {
     Result result;
-    double sum1 = 0;
-    double sum2 = 0;
+    long double sum1 = 0;
+    long double sum2 = 0;
     double x = 0;
     double y = 0;
     for (int i = 0; i < numVertices - 1; i++) {
@@ -125,6 +125,12 @@ Result shoelaceTheorem(long numVertices, double arrayVertices[][2], long numThre
         sum2 += x * y;
     }
     sum2 += arrayVertices[1][0] * arrayVertices[4][1];
-    std::cout << " area: " << std::abs((sum1 - sum2) / 2.0) << "\n";
+
+    long double area = std::abs((sum1 - sum2) / 2.0);
+    std::cout << " area: " << area << "\n";
     return result;
+}
+
+void printResult(OutputType, Result) {
+
 }
