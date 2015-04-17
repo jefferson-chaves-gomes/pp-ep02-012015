@@ -39,12 +39,6 @@ void readVertices(long, double[][2]);
 Result shoelaceTheorem(long, double[][2], long);
 void printResult(OutputType, Result);
 
-//Result findPrimesSequential(int);
-//Result findPrimesParallel(int, int);
-//bool isPrime(int);
-//void printTimeOutputType(Result);
-//void printListOutputType(Result);
-
 // main Function
 // -----------------------------------------------------
 int main(int argc, char **argv) {
@@ -131,6 +125,6 @@ Result shoelaceTheorem(long numVertices, double arrayVertices[][2], long numThre
     return result;
 }
 
-void printResult(OutputType, Result) {
+void printResult(OutputType outputType, Result result) {
 
 }
