@@ -6,18 +6,18 @@
  Copyright   : Academic Program
  Description : EP 02 in C++
  ============================================================================
- */
+*/
 
 // Libraries definitions
 // -----------------------------------------------------
-#include <iostream> // for std::cin, std::cout, etc.
-#include <vector> // for vector
-#include <sys/time.h> // for gettimeofday
-#include <cmath> // for std::abs, std::ceil
-#include <iomanip> // for std::setprecision
-#include <pthread.h> // for pthreads
-#include <stdlib.h> // for std:atoi
-#include <climits> // for INT_MAX
+#include <iostream>     // for std::cin, std::cout, etc.
+#include <vector>       // for vector
+#include <sys/time.h>   // for gettimeofday
+#include <cmath>        // for std::abs, std::ceil
+#include <iomanip>      // for std::setprecision
+#include <pthread.h>    // for pthreads
+#include <stdlib.h>     // for std:atoi
+#include <climits>      // for INT_MAX
 
 // Enums definitions
 // -----------------------------------------------------
@@ -124,7 +124,7 @@ bool readInputParams(int argc, char **argv, OutputType &outputType, int &numThre
         return false;
     } else {
         std::string input(argv[1]);
-        numThreads = std::atoi(argv[2]);
+        numThreads = atoi(argv[2]);
         OutputType outputTypel = stringToOutputType(input);
         if (numThreads <= 0 || numThreads > INT_MAX || outputTypel == NONE) {
             printUsage();
@@ -189,11 +189,11 @@ Result startParallelProcess(const std::vector<RlThreadRangeVertices>& vecRelatio
     timeval endTime;
     gettimeofday(&startTime, NULL);
     pthread_t* arrayThreads = new pthread_t[vecRelations.size()];
-    for (int i = 0; i < vecRelations.size(); i++) {
+    for (unsigned int i = 0; i < vecRelations.size(); i++) {
         pthread_create(&arrayThreads[i], NULL, shoelaceTheorem, (void *) &vecRelations[i]);
     }
     long double sum = 0.0;
-    for (int i = 0; i < vecRelations.size(); i++) {
+    for (unsigned int i = 0; i < vecRelations.size(); i++) {
         pthread_join(arrayThreads[i], NULL);
         sum += vecRelations[i].getResult().area;
     }
