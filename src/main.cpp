@@ -157,12 +157,22 @@ OutputType stringToOutputType(std::string input) {
 }
 
 void readVertices(const long numVertices, std::vector<Vertice> &vecVertices) {
+    if (numVertices < 4) {
+        std::cout << "Erro: The number of vertices must be greater then 4! \n";
+        exit(EXIT_FAILURE);
+    }
     double x = 0.0;
     double y = 0.0;
     for (long i = 0; i < numVertices; i++) {
         std::cin >> x;
         std::cin >> y;
         vecVertices.push_back(Vertice(x, y));
+    }
+    Vertice firstVertice = vecVertices[0];
+    Vertice lastVertice = vecVertices[vecVertices.size() - 1];
+    if (firstVertice.getX() != lastVertice.getX() || firstVertice.getY() != lastVertice.getY()) {
+        std::cout << "Erro: The last vertice must be equal to the first vertice! \n";
+        exit(EXIT_FAILURE);
     }
 }
 
