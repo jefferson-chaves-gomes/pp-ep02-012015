@@ -201,12 +201,12 @@ Result startParallelProcess(const std::vector<RlThreadRangeVertices>& vecRelatio
     result.area = std::abs((sum) / 2.0);
     gettimeofday(&endTime, NULL);
     long time = ((endTime.tv_sec * 1000000 + endTime.tv_usec) - (startTime.tv_sec * 1000000 + startTime.tv_usec));
+    free(arrayThreads);
     result.processTime = time;
     return result;
 }
 
 void *shoelaceTheorem(void *arg0) {
-    // Cast the received parameter.
     RlThreadRangeVertices *pThreadArgs = (RlThreadRangeVertices *) arg0;
     long double sum1 = 0.0;
     long double sum2 = 0.0;
