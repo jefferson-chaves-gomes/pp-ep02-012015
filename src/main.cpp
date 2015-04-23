@@ -6,7 +6,7 @@
  Copyright   : Academic Program
  Description : EP 02 in C++
  ============================================================================
-*/
+ */
 
 // Libraries definitions
 // -----------------------------------------------------
@@ -46,6 +46,7 @@ class Vertice {
                 x(arg0), y(arg1) {
             // Nothing to do.
         }
+
         double getX() const {
             return x;
         }
@@ -81,7 +82,6 @@ class RlThreadRangeVertices {
         void setArea(const long double area) {
             this->result.area = area;
         }
-
 };
 
 // Functions declarations
@@ -104,15 +104,16 @@ std::vector<Vertice> vecVertices;
 int main(int argc, char **argv) {
     int numThreads = 0;
     OutputType outputType = NONE;
-    if (readInputParams(argc, argv, outputType, numThreads)) {
-        long numVertices = 0;
-        std::cin >> numVertices;
-        readVertices(numVertices, vecVertices);
-        std::vector<RlThreadRangeVertices> vecRelations;
-        buildRelations(numVertices, numThreads, vecRelations);
-        Result result = startParallelProcess(vecRelations);
-        printResult(outputType, result);
+    if (!readInputParams(argc, argv, outputType, numThreads)) {
+        return EXIT_SUCCESS;
     }
+    long numVertices = 0;
+    std::cin >> numVertices;
+    readVertices(numVertices, vecVertices);
+    std::vector<RlThreadRangeVertices> vecRelations;
+    buildRelations(numVertices, numThreads, vecRelations);
+    Result result = startParallelProcess(vecRelations);
+    printResult(outputType, result);
     return EXIT_SUCCESS;
 }
 
